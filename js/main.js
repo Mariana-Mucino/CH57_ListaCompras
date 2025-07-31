@@ -4,7 +4,11 @@ const btnAgregar = document.getElementById("btnAgregar")
 const btnClear = document.getElementById("btnClear")
 
 const alertValidaciones = document.getElementById("alertValidaciones");
-const alertValidacionesTexto = document.getElementById("alertValidacionesTexto")
+const alertValidacionesTexto = document.getElementById("alertValidacionesTexto");
+const tablaListaCompras = document.getElementById("tablaListaCompras");
+const cuerpoTabla = tablaListaCompras.getElementsByTagName("tbody").item(0);
+
+let cont = 0;
 
 function validarCantidad(){
     if(txtNumber.value==""){
@@ -29,10 +33,12 @@ function getPrecio(){
 
 btnAgregar.addEventListener("click", function(event){
     event.preventDefault();
+    let isValid = true;
     alertValidacionesTexto.innerHTML="";
     alertValidaciones.style.display="none";
     txtName.style.border="";
     txtNumber.style.border="";
+    
 
     //Name
     //Validar que tenga información, mínimo 3 letras
@@ -41,15 +47,33 @@ btnAgregar.addEventListener("click", function(event){
         //mensaje de error
         alertValidacionesTexto.innerHTML="<strong>El nombre del producto no es correcto</strong><br/>";
         alertValidaciones.style.display="block";
+        isValid = false;
     } //<3
 
     if(! validarCantidad()){
         txtNumber.style.border="medium red solid"
         alertValidacionesTexto.innerHTML+="<strong>La cantidad no es correcta</strong>";
         alertValidaciones.style.display="block";
+        isValid = false;
     }//! validarCantidad
     
+    if (isValid){
+        //Agregar los elementos a la tabla
+        cont++;
+        let precio = getPrecio();
+        let row =`<tr>
+                    <td>${cont}</td>
+                    <td>${txtName.value}</td>
+                    <td>${txtNumber.value}</td>
+                    <td>${precio}</td>
+                  </tr>
+        `;
 
+        cuerpoTabla.insertAdjacentHTML("beforeend", row);
+        txtName.value ="";
+        txtNumber.value ="";
+        txtName.focus();
+    }//isValid
 
     
 }) //btnAgregar
