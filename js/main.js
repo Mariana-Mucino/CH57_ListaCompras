@@ -126,7 +126,7 @@ window.addEventListener("load", function(event){
                    `;
     cuerpoTabla.insertAdjacentHTML("beforeend", row);
 
-    });
+    }); //foreach
    } //datos !=null
 
    if(this.localStorage.getItem("resumen")){
@@ -141,3 +141,41 @@ window.addEventListener("load", function(event){
     precioTotal.innerText = new Intl.NumberFormat("es-MX", 
                     { style: "currency", currency: "MXN" }).format(costoTotal);
 }); //window load
+
+
+btnClear.addEventListener("click", function (event){
+    event.preventDefault();
+    // 1. Eliminarl el localStorage
+    localStorage.removeItem("datos");
+    localStorage.removeItem("resumen");
+    // 2. Limpiar la tabla 
+    cuerpoTabla.innerHTML="";
+    // 3. Limpiar los campos 
+    txtName.value ="";
+    txtNumber.value ="";
+    txtName.focus();
+    // 4. Limpiar el borde de los campos 
+    txtName.style.border="";
+    txtNumber.style.border="";
+    // 5. Limpiar los alerts
+    alertValidacionesTexto.innerHTML="";
+    alertValidaciones.style.display="none";
+    // 6. Limpiar el resumen
+    cont = 0;
+    totalEnProductos = 0;
+    costoTotal = 0;
+
+    contadorProductos.innerText=cont;
+    productosTotal.innerText = totalEnProductos;
+    precioTotal.innerText = new Intl.NumberFormat("es-MX", 
+                    { style: "currency", currency: "MXN" }).format(costoTotal);
+
+    datos = new Array();                
+}); //Limpiar todo
+
+
+
+
+
+
+
